@@ -1,0 +1,228 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-info
+  labels:
+    app: product-info
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-info
+  template:
+    metadata:
+      labels:
+        app: product-info
+    spec:
+      containers:
+        - name: product-info
+          image: username/product-info:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sales-and-marketing
+  labels:
+    app: sales-and-marketing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sales-and-marketing
+  template:
+    metadata:
+      labels:
+        app: sales-and-marketing
+    spec:
+      containers:
+        - name: sales-and-marketing
+          image: username/sales-and-marketing:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expert-advice
+  labels:
+    app: expert-advice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expert-advice
+  template:
+    metadata:
+      labels:
+        app: expert-advice
+    spec:
+      containers:
+        - name: expert-advice
+          image: username/expert-advice:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-service
+  labels:
+    app: customer-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customer-service
+  template:
+    metadata:
+      labels:
+        app: customer-service
+    spec:
+      containers:
+        - name: customer-service
+          image: username/customer-service:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-info
+  labels:
+    app: product-info
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: product-info
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: sales-and-marketing
+  labels:
+    app: sales-and-marketing
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: sales-and-marketing
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: expert-advice
+  labels:
+    app: expert-advice
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: expert-advice
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-service
+  labels:
+    app: customer-service
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: customer-service
+
